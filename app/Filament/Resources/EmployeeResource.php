@@ -43,12 +43,12 @@ class EmployeeResource extends Resource
                             ->label('State')
                             ->options(function (callable $get) {
                                 $country = Country::find($get('country_id'));
-
                                 if (!$country) {
                                     return State::all()->pluck('name', 'id');
                                 }
                                 return $country->states->pluck('name', 'id');
-                            })->reactive()
+                            })
+                            ->reactive()
                             ->afterStateUpdated(fn (callable $set) => $set('city_id', null)),
                         Select::make('city_id')
                             ->label('City')
@@ -58,7 +58,9 @@ class EmployeeResource extends Resource
                                     return City::all()->pluck('name', 'id');
                                 }
                                 return $state->cities->pluck('name', 'id');
-                            }),
+                            })
+                            ->reactive()
+                            ->afterStateUpdated(fn (callable $set) => $set('city_id', null)),
                         Select::make('department_id')
                             ->relationship('department', 'name')->required(),
                         TextInput::make('first_name')->required(),
