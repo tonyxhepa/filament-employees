@@ -31,7 +31,6 @@
             {{ $slot }}
         </main>
     </div>
-    <x-impersonate::banner />
 </body>
 
 </html>
