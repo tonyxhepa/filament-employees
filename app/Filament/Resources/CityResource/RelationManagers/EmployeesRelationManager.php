@@ -13,6 +13,7 @@ use Filament\Resources\Form;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Resources\Table;
 use Filament\Tables;
+use Filament\Tables\Columns\TextColumn;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
@@ -70,7 +71,12 @@ class EmployeesRelationManager extends RelationManager
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('first_name'),
+                TextColumn::make('id')->sortable(),
+                TextColumn::make('first_name')->sortable()->searchable(),
+                TextColumn::make('last_name')->sortable()->searchable(),
+                TextColumn::make('department.name')->sortable(),
+                TextColumn::make('date_hired')->date(),
+                TextColumn::make('created_at')->dateTime(),
             ])
             ->filters([
                 //
